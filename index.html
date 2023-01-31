@@ -1,0 +1,38 @@
+<DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <title>webプログラミング課題</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<h1>天気予報</h1>
+<h2>東京の1週間の天候情報を調べる</h2>
+<button type="button" onclick="clickDisplayAlert()">GO</div>
+  <script>
+  function clickDisplayAlert() {
+
+  const api = 'https://api.aoikujira.com/tenki/week.php?fmt=json&city=319'
+  fetch(api)
+    .then(res => res.json())
+    .then(data => tenki(data))
+  
+  function tenki(data) {
+    let s = ''
+    const tokyo = data[319] 
+
+    for (let row of tokyo) {
+      console.log(row) 
+      s += `
+        <h3>${row['date']}の天気</h3>
+        <ul><li>天気: ${row['forecast']}</li>
+        <li>降水確率: ${row['poptimes']}%</li>
+        <li>最低気温: ${row['mintemp']}℃</li>
+        <li>最高気温: ${row['maxtemp']}℃</li>
+        <li>波: ${row['waves']}</li>
+        <li>風: ${row['winds']}</li>
+        </ul>
+      `
+    }
+    document.write(s)
+  }
+}
+  </script>
